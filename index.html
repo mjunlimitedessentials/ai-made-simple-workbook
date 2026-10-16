@@ -1,0 +1,332 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>AI Made Simple Workbook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Great+Vibes&family=Nunito+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one wide column workbook. Cinematic slide images as section heroes, gold-and-plum cards, a sticky progress bar. Large type for seniors. */
+:root{
+  --bg:#F6EFE6; --panel:#FFFDF9; --panel-2:#F0E5D8; --line:#E3D3C2;
+  --ink:#2A1824; --ink-2:#5A4752; --magenta:#A3195B; --magenta-soft:rgba(163,25,91,.10);
+  --gold:#B8892E; --gold-hi:#F3D58A; --on-gold:#2A1824; --ok:#2F6B5E; --warn:#A4452C;
+  --display:"Archivo","Arial Black",Arial,sans-serif; --script:"Great Vibes","Brush Script MT",cursive;
+  --body:"Nunito Sans","Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1A1016; --panel:#24171F; --panel-2:#2E1E28; --line:#46303D;
+  --ink:#F6EDE4; --ink-2:#CDB9C2; --magenta:#F07AB0; --magenta-soft:rgba(240,122,176,.14);
+  --gold:#E2B85C; --gold-hi:#F3D58A; --on-gold:#2A1824; --ok:#7CC7B3; --warn:#F09A80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A1016; --panel:#24171F; --panel-2:#2E1E28; --line:#46303D;
+  --ink:#F6EDE4; --ink-2:#CDB9C2; --magenta:#F07AB0; --magenta-soft:rgba(240,122,176,.14);
+  --gold:#E2B85C; --gold-hi:#F3D58A; --on-gold:#2A1824; --ok:#7CC7B3; --warn:#F09A80; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:19px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:900px;margin:0 auto}
+a{color:var(--magenta);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--magenta);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:900;line-height:1.08;margin:0;text-wrap:balance}
+.script{font-family:var(--script);font-weight:400;color:var(--magenta);font-size:1.5em;line-height:1}
+.eyebrow{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--magenta);margin:0}
+
+/* progress */
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);
+  margin-left:calc(-1*max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1*max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px}
+.progress .inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.progress .label{font-family:var(--display);font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.track{flex:1;height:12px;border-radius:99px;background:var(--panel-2);overflow:hidden;min-width:0}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--magenta),var(--gold));transition:width .3s}
+.count{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* hero */
+.hero{padding-block:28px 8px;display:grid;gap:20px}
+.hero img,.shot{display:block;width:100%;max-width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;border:1px solid var(--line);box-shadow:0 14px 40px rgba(42,24,36,.18)}
+.hero h1{font-size:clamp(40px,8vw,72px)}
+.lede{font-size:21px;color:var(--ink-2);margin:0;max-width:62ch}
+.lede strong{color:var(--ink)}
+
+section.block{padding-block:40px 8px;border-top:1px solid var(--line);margin-top:32px;display:grid;gap:18px}
+section.block h2{font-size:clamp(30px,5.5vw,44px)}
+.intro{color:var(--ink-2);margin:0;max-width:62ch}
+
+/* checklists */
+.checks{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.checks label{display:flex;gap:16px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;cursor:pointer;font-weight:700}
+.checks input{appearance:none;flex:none;width:30px;height:30px;border-radius:8px;border:2px solid var(--gold);background:var(--panel);margin:0;cursor:pointer;display:grid;place-items:center}
+.checks input:checked{background:linear-gradient(135deg,var(--gold-hi),var(--gold));border-color:var(--gold)}
+.checks input:checked::after{content:"";width:9px;height:16px;border:solid var(--on-gold);border-width:0 4px 4px 0;transform:rotate(45deg) translate(-1px,-2px)}
+.checks label.done{border-color:var(--gold)}
+.checks label.done .t{text-decoration:line-through;text-decoration-color:var(--gold);color:var(--ink-2)}
+.checks .t{display:block}
+.checks .sub{display:block;font-weight:500;color:var(--ink-2);font-size:17px}
+
+/* pray */
+.pray{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.pray .p{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.pray .cap{background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--on-gold);font-family:var(--display);font-weight:900;font-size:40px;text-align:center;padding:8px 0}
+.pray .b{padding:14px;display:grid;gap:4px}
+.pray .b strong{font-family:var(--display);font-weight:900;font-size:18px;letter-spacing:.06em}
+.pray .b span{color:var(--ink-2);font-size:17px;line-height:1.4}
+@media (max-width:640px){.pray{grid-template-columns:repeat(2,1fr)}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font-family:var(--display);font-weight:900;font-size:16px;letter-spacing:.04em;
+  padding:12px 18px;border-radius:999px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:var(--on-gold);box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.btn:active{transform:translateY(2px);box-shadow:none}
+.btn.copied{background:var(--ok);color:#fff}
+.btn svg{width:18px;height:18px}
+
+/* setup block */
+.setup{background:var(--panel);border:2px solid var(--gold);border-radius:18px;overflow:hidden}
+.setup .bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--panel-2);border-bottom:1px solid var(--line)}
+.setup .bar strong{font-family:var(--display);font-weight:900}
+.setup pre{margin:0;padding:18px;max-height:320px;overflow:auto;font-family:var(--mono);font-size:14px;line-height:1.55;white-space:pre-wrap;color:var(--ink)}
+.steps{margin:0;padding-left:1.3em;display:grid;gap:8px}
+.steps li::marker{font-family:var(--display);font-weight:900;color:var(--magenta)}
+
+/* codes */
+.family{display:grid;gap:12px}
+.family h3{font-size:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.family h3 .n{font-family:var(--body);font-weight:700;font-size:15px;color:var(--ink-2);letter-spacing:.04em}
+.codes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.codes{grid-template-columns:1fr}}
+.code{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:10px;min-width:0}
+.code .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.code .name{font-family:var(--mono);font-weight:700;font-size:22px;color:var(--magenta);overflow-wrap:anywhere}
+.code .use{margin:0;color:var(--ink);font-weight:600;font-size:17px;line-height:1.45}
+.code .try{margin:0;font-family:var(--mono);font-size:14px;line-height:1.5;color:var(--ink-2);background:var(--panel-2);border-radius:10px;padding:10px 12px;overflow-wrap:anywhere}
+.code .try b{color:var(--ink);font-family:var(--body)}
+.code .btn{padding:9px 14px;font-size:14px}
+
+.note{background:var(--magenta-soft);border-left:5px solid var(--magenta);border-radius:0 14px 14px 0;padding:14px 18px;margin:0}
+.safe{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.safe{grid-template-columns:1fr}}
+.safe div{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.safe h3{font-size:20px;margin-bottom:6px}
+.safe ul{margin:0;padding-left:1.1em}
+.never h3{color:var(--warn)} .always h3{color:var(--ok)}
+footer{margin-top:48px;padding-block:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;color:var(--ink-2);font-size:16px}
+footer .em{font-weight:800;color:var(--ink);user-select:all}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+</style>
+
+<div class="progress" role="status" aria-live="polite"><div class="inner">
+  <span class="label">Your progress</span>
+  <div class="track"><div class="fill" id="fill"></div></div>
+  <span class="count" id="count">0 of 0</span>
+</div></div>
+
+<main class="wrap">
+  <header class="hero">
+    <img src="cover.jpg" alt="AI Made Simple. Your first steps with ChatGPT, Claude and Gemini. Business Circle, with Mona “MJ” Jackson-Ham.">
+    <p class="eyebrow">Business Circle · Class Workbook</p>
+    <h1>AI Made Simple <span class="script">Workbook</span></h1>
+    <p class="lede">Keep this page open during class. <strong>Check off each step as you go</strong>, and use the gold <strong>Copy</strong> buttons so you never have to retype a code.</p>
+  </header>
+
+  <section class="block" id="before">
+    <p class="eyebrow">Before class</p>
+    <h2>Get ready at home</h2>
+    <p class="intro">Each one takes a few minutes. Use the same email for all three so it’s easy to remember.</p>
+    <ul class="checks">
+      <li><label><input type="checkbox" id="c-chatgpt" data-check><span><span class="t">Make a free ChatGPT account</span><span class="sub"><a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a> or the ChatGPT app</span></span></label></li>
+      <li><label><input type="checkbox" id="c-claude" data-check><span><span class="t">Make a free Claude account</span><span class="sub"><a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> or the Claude app. You’ll need this one for the Kingdom Codes.</span></span></label></li>
+      <li><label><input type="checkbox" id="c-gemini" data-check><span><span class="t">Open Gemini with your Google account</span><span class="sub"><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> or the Gemini app</span></span></label></li>
+      <li><label><input type="checkbox" id="c-bring" data-check><span><span class="t">Bring a charged phone, tablet or laptop</span><span class="sub">Plus your email password, reading glasses and a notebook</span></span></label></li>
+    </ul>
+  </section>
+
+  <section class="block" id="recipe">
+    <p class="eyebrow">How to talk to AI</p>
+    <h2>The Simple Recipe: <span class="script">Who · What · How</span></h2>
+    <img class="shot" src="recipe.jpg" alt="Three gold pillars: Who, tell it who you are. What, say what you need. How, describe how you want it.">
+    <ul class="checks">
+      <li><label><input type="checkbox" id="c-who" data-check><span><span class="t">WHO: tell it who you are</span><span class="sub">“I own a small bakery in our town.”</span></span></label></li>
+      <li><label><input type="checkbox" id="c-what" data-check><span><span class="t">WHAT: say what you need</span><span class="sub">“Write a thank-you note to my customers.”</span></span></label></li>
+      <li><label><input type="checkbox" id="c-how" data-check><span><span class="t">HOW: describe how you want it</span><span class="sub">“Warm, three sentences, simple words.”</span></span></label></li>
+      <li><label><input type="checkbox" id="c-follow" data-check><span><span class="t">Ask one follow-up</span><span class="sub">“Make it shorter.” “Use simpler words.” “Explain that like I’m new.”</span></span></label></li>
+    </ul>
+  </section>
+
+  <section class="block" id="pray">
+    <p class="eyebrow">Kingdom Command Codes</p>
+    <h2>The <span class="script">P.R.A.Y.</span> Method</h2>
+    <img class="shot" src="codes-flow.jpg" alt="The P.R.A.Y. Method: Paste, Request, Apply, Yield.">
+    <div class="pray" aria-hidden="true">
+      <div class="p"><div class="cap">P</div><div class="b"><strong>PASTE</strong><span>The setup block, once</span></div></div>
+      <div class="p"><div class="cap">R</div><div class="b"><strong>REQUEST</strong><span>A code plus your situation</span></div></div>
+      <div class="p"><div class="cap">A</div><div class="b"><strong>APPLY</strong><span>Take your next step this week</span></div></div>
+      <div class="p"><div class="cap">Y</div><div class="b"><strong>YIELD</strong><span>Take it to God in prayer</span></div></div>
+    </div>
+    <ul class="checks">
+      <li><label><input type="checkbox" id="c-p" data-check><span><span class="t">P · I pasted the setup block into Claude</span><span class="sub">Claude replied “Kingdom codes ready.”</span></span></label></li>
+      <li><label><input type="checkbox" id="c-r" data-check><span><span class="t">R · I typed a code plus my situation</span><span class="sub">Try: /Bless My client’s grand opening this Saturday</span></span></label></li>
+      <li><label><input type="checkbox" id="c-a" data-check><span><span class="t">A · I picked one next step to do this week</span></span></label></li>
+      <li><label><input type="checkbox" id="c-y" data-check><span><span class="t">Y · I prayed it out loud and gave it to God</span></span></label></li>
+    </ul>
+  </section>
+
+  <section class="block" id="setup">
+    <p class="eyebrow">Step P</p>
+    <h2>Your setup block</h2>
+    <ol class="steps">
+      <li>Tap <strong>Copy setup block</strong> below.</li>
+      <li>Open a <strong>new chat</strong> in Claude and paste it in. Press send.</li>
+      <li>Wait for Claude to reply <strong>“Kingdom codes ready.”</strong></li>
+    </ol>
+    <div class="setup">
+      <div class="bar"><strong>Kingdom Codes setup block</strong><button class="btn" type="button" data-copy-target="setupText">Copy setup block</button></div>
+      <pre id="setupText"></pre>
+    </div>
+    <p class="note"><strong>Make them permanent:</strong> paste the setup block into a Claude Project’s instructions. Every chat in that Project will know your codes, with no pasting needed.</p>
+  </section>
+
+  <section class="block" id="codes">
+    <p class="eyebrow">Step R</p>
+    <h2>Your 20 codes</h2>
+    <p class="intro">Tap <strong>Copy</strong>, paste it into Claude, then type your situation after the code. Each card shows an example.</p>
+    <div id="families" style="display:grid;gap:28px"></div>
+  </section>
+
+  <section class="block" id="safety">
+    <p class="eyebrow">Stay safe</p>
+    <h2>A few rules that protect you</h2>
+    <div class="safe">
+      <div class="never"><h3>Never share</h3><ul><li>Social Security numbers</li><li>Bank or card numbers</li><li>Passwords or PINs</li><li>Private medical details</li></ul></div>
+      <div class="always"><h3>Always</h3><ul><li>Double-check facts and numbers</li><li>Verify Bible verses</li><li>Ask a real expert for big decisions</li><li>Hang up on “urgent” money calls</li></ul></div>
+    </div>
+    <p class="note">AI is a tool. You bring the wisdom. These codes support your walk; they don’t replace your pastor, a counselor, or a doctor.</p>
+  </section>
+
+  <footer>
+    <span>Mona “MJ” Jackson-Ham · ThinkBox AI Studios</span>
+    <span class="em">ThinkBoxAIStudios@gmail.com</span>
+  </footer>
+</main>
+
+<script>
+const SETUP = `You know the following command codes. When my message starts with or includes one of these codes, follow that code's instructions for the content that comes with it. If I use more than one code, apply them in the order I typed them. If I don't use a code, respond normally.
+
+/LordJesus: Pray over the concern or decision below by addressing the Lord Jesus directly (e.g., "Lord Jesus, ..."). Write a short, Scripture-grounded prayer (under 120 words) that names my situation specifically, asks Him to save me from every destructive path He has not ordained, and ends in Jesus' name. Cite two or three verses by reference. Then give me four ways to discern His direction: peace, provision, wise counsel, and what to lay down. Tie each one to a verse and a practical action I can take this week. End with one sentence of encouragement.
+
+/Cover: Write an intercessory prayer covering the person, family, ministry, or business named below. Pray through the Lord Jesus for protection, provision, wisdom, and purpose. Cite three verses by reference. Keep it under 200 words, end in Jesus' name, and make it easy to pray out loud.
+
+/Repent: Write a prayer of confession and restoration to the Lord Jesus for the area below. Name it honestly without condemnation (Romans 8:1), cite 1 John 1:9 and one or two other verses by reference, and receive His forgiveness. Then give me three practical steps to walk in freedom this week. Keep it under 200 words and end in Jesus' name.
+
+/Thanksgiving: Turn the blessings or situation below into a prayer of thanksgiving to the Lord Jesus. Name each blessing specifically, connect two or three of them to a verse by reference, and include one short testimony line I could share with others. End in Jesus' name.
+
+/Armor: Write a spiritual warfare prayer for the battle below, standing in the authority of the Lord Jesus Christ. Walk through each piece of the armor of God from Ephesians 6:10-18 and apply it to my situation. Cite two or three more verses by reference. Keep it bold, under 250 words, easy to pray out loud, and end in Jesus' name.
+
+/Discern: Help me weigh the decision below through the lordship of Jesus Christ. Ask: Does this honor Him? Is it rooted in faith or in fear? Does it serve my household and calling? What does Scripture say? Give two or three options with what each requires of me. Close with a one-line prayer surrendering the decision to the Lord Jesus.
+
+/Wisdom: I need wisdom from the Lord Jesus for the problem below (James 1:5). Restate the problem in one sentence, find three Scripture principles that apply (with references), and turn each into a practical action. Flag anything I should take to a pastor or professional. Close with a one-line prayer for wisdom.
+
+/Assignment: Help me get clear on my God-given assignment in the area below. Ask me up to three reflective questions first if needed. Then summarize what I'm called to, who I'm called to serve, and what I'm not called to carry. Tie it to two or three verses by reference, and close with a prayer committing my assignment to the Lord Jesus.
+
+/Peace: I'm feeling anxious or unsettled about the situation below. Write a calming prayer to the Lord Jesus based on Philippians 4:6-7 and one or two other verses. Then give me three steps: what to release to Him, what is mine to do today, and one person to talk to. Keep it gentle and under 200 words.
+
+/Consecrate: Create a seven-day consecration plan for the purpose below, centered on seeking the Lord Jesus. For each day, include a Scripture reading, a focus prayer, and one thing to set aside (such as social media, TV, or a meal). Offer fasting options at different levels, and remind me to check with my doctor if I have health concerns.
+
+/KingdomPlan: Review the business idea or plan below through a Kingdom lens. Show where it honors the Lord Jesus, where it serves people well, and where it may conflict with biblical values such as honesty, fair pricing, rest, and generosity. Suggest specific changes, tie each to a verse by reference, and close with a prayer dedicating the plan to Him.
+
+/Provision: Pray with me for provision in the need below, trusting the Lord Jesus as my provider (Philippians 4:19). Write a short prayer, then give me five practical stewardship steps I can take this month covering income, spending, giving, asking for help, and planning. Cite a verse for each. Be honest and practical, not hype.
+
+/Steward: Audit how I'm stewarding the time, money, talent, or relationships described below, based on the parable of the talents (Matthew 25:14-30). Show what I'm multiplying, what I'm burying, and what I should lay down. Give me three changes for the next 30 days and a prayer offering my stewardship to the Lord Jesus.
+
+/Bless: Write a blessing to speak over the person, team, client, or launch below, in the name of the Lord Jesus. Model it on Numbers 6:24-26 and include two or three more verses by reference. Keep it under 150 words, warm, and ready to read out loud or send in a card or message.
+
+/Forgive: Help me walk through forgiveness toward the person or situation below, following the example of the Lord Jesus. Write a prayer releasing the offense (Colossians 3:13). Explain the difference between forgiveness, trust, and healthy boundaries. If reconciliation is wise, draft a short, gracious message I could send. Keep it honest and healthy.
+
+/Devotion: Write a 200-word devotional on the topic below, centered on the Lord Jesus. Include one key verse, a short reflection that connects His word to everyday life and business, one question for me to journal on, and a closing prayer to Jesus.
+
+/Declare: Write eight short declarations for the situation below, spoken in the name of the Lord Jesus Christ. Base each one on a specific verse (cite the reference). Keep each under 20 words, in the present tense, and bold in faith.
+
+/Word: Build a teaching outline on the Scripture or theme below that points to the Lord Jesus. Include a title, the key text, background context, three main points with supporting verses, a real-life application for each, and a closing prayer or altar call. Note any verses I should verify in context.
+
+/Psalm: Write an original psalm of praise to the Lord Jesus (12 to 16 lines) based on the situation or theme below. Move from an honest cry, to trust, to praise, the way many Psalms do. Use fresh, vivid language, and list two or three Psalms that inspired it.
+
+/Testimony: Turn the experience below into a testimony that glorifies the Lord Jesus. Structure it as: where I was, what happened, how He moved, and where I am now. Give me a 150-word version to share in person and a short social post with one Scripture. Keep my voice and the facts exactly as I told them.
+
+Reply 'Kingdom codes ready.' to confirm, and then wait for my first code.`;
+
+const FAMILIES = [
+ {name:"Prayer & Covering", codes:[
+  ["/LordJesus","When you face a big decision and need both prayer and a clear next step.","Save me from every destructive path that’s not ordained by You as I decide whether to leave my job."],
+  ["/Cover","To stand in the gap for clients, your team, your church, or your family.","My husband and children as we start a new school year"],
+  ["/Repent","When you’ve fallen short and need to come back to Him without shame.","I’ve been putting business ahead of my time with God"],
+  ["/Thanksgiving","After a win, an answered prayer, or any day you want to count your blessings.","We signed two new clients and my family is healthy"],
+  ["/Armor","When you face opposition, discouragement, or a season of attack.","Confusion and division keep rising on my ministry team"]]},
+ {name:"Direction & Discernment", codes:[
+  ["/Discern","When you have options on the table and need to sort faith from fear.","Should I take on a large client whose values don’t align with mine?"],
+  ["/Wisdom","When you’re stuck on a problem and need biblical principles turned into action.","A client is three months behind on payment and we have a good relationship"],
+  ["/Assignment","When you’re spread thin and need to know what is truly yours to carry.","I run an agency, an AI school, and serve in media ministry"],
+  ["/Peace","When worry is loud. If anxiety is ongoing, also reach out to your pastor or a counselor.","I’m worried about money while I build my business"],
+  ["/Consecrate","Before a launch, a new year, or any season you want to set yourself apart.","Seeking God’s direction before I launch my new program"]]},
+ {name:"Kingdom Business", codes:[
+  ["/KingdomPlan","Before you launch an offer, set prices, or sign a partnership.","My plan to sell AI training to churches at $497 per seat"],
+  ["/Provision","When there’s a financial gap and you need both faith and a plan.","I need $3,000 to cover business expenses this month"],
+  ["/Steward","Monthly or quarterly, to check whether your yes matches your calling.","My weekly schedule across my job, agency, ministry, and family"],
+  ["/Bless","For client launches, team milestones, birthdays, and new beginnings.","My client’s grand opening this Saturday"],
+  ["/Forgive","After a broken partnership, a hurtful client, or a church conflict.","A business partner left and took clients with them"]]},
+ {name:"Word & Worship", codes:[
+  ["/Devotion","To start your morning, open a team meeting, or create content for your audience.","Trusting God when sales are slow"],
+  ["/Declare","When you need to speak life over a launch, a season, or your household.","My business launch this quarter"],
+  ["/Word","For Bible studies, sermons, workshops, and ministry trainings.","John 15:5 - abiding in Christ as a business owner"],
+  ["/Psalm","For worship, journaling, or turning a hard season into praise.","Waiting on God for breakthrough"],
+  ["/Testimony","When God moves and you want to tell it well, in person or online.","How God provided my first big client after I almost quit"]]}
+];
+
+document.getElementById("setupText").textContent = SETUP;
+
+const copyIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+const host = document.getElementById("families");
+FAMILIES.forEach((f,fi)=>{
+  const sec=document.createElement("div"); sec.className="family";
+  const start=fi*5+1;
+  sec.innerHTML=`<h3>${f.name} <span class="n">Codes ${start}–${start+4}</span></h3>`;
+  const grid=document.createElement("div"); grid.className="codes";
+  f.codes.forEach(([code,use,ex])=>{
+    const c=document.createElement("article"); c.className="code";
+    c.innerHTML=`<div class="top"><span class="name"></span><button class="btn" type="button">${copyIcon}Copy</button></div><p class="use"></p><p class="try"><b>Try it:</b> <span></span></p>`;
+    c.querySelector(".name").textContent=code;
+    c.querySelector(".use").textContent=use;
+    c.querySelector(".try span").textContent=code+" "+ex;
+    const b=c.querySelector("button");
+    b.setAttribute("aria-label","Copy "+code);
+    b.addEventListener("click",()=>copy(code+" ",b,c.querySelector(".name")));
+    grid.appendChild(c);
+  });
+  sec.appendChild(grid); host.appendChild(sec);
+});
+
+function copy(text,btn,selectEl){
+  const label=btn.innerHTML;
+  const done=()=>{btn.classList.add("copied");btn.textContent="Copied";setTimeout(()=>{btn.classList.remove("copied");btn.innerHTML=label},1600)};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(selectEl);const s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent="Press Ctrl+C";setTimeout(()=>{btn.innerHTML=label},2200)};
+  try{navigator.clipboard.writeText(text).then(done,fallback)}catch(e){fallback()}
+}
+document.querySelectorAll("[data-copy-target]").forEach(b=>{
+  const el=document.getElementById(b.dataset.copyTarget);
+  b.addEventListener("click",()=>copy(el.textContent,b,el));
+});
+
+// checklist progress (saved only in this browser)
+const KEY="aims-workbook-checks";
+let saved={}; try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+const boxes=[...document.querySelectorAll("[data-check]")];
+function update(){
+  const n=boxes.filter(b=>b.checked).length;
+  document.getElementById("fill").style.width=(n/boxes.length*100)+"%";
+  document.getElementById("count").textContent=n+" of "+boxes.length;
+  boxes.forEach(b=>b.closest("label").classList.toggle("done",b.checked));
+}
+boxes.forEach(b=>{
+  b.checked=!!saved[b.id];
+  b.addEventListener("change",()=>{saved[b.id]=b.checked;try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){};update()});
+});
+update();
+</script>
+
+</body></html>
